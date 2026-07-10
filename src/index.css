@@ -25,9 +25,9 @@ a:hover {
 }
 
 .outletContainer {
-  padding-top: 80px;
-  display: flex;
-  place-items: center;
+  padding: 100px 10px 10px 10px;
+
+
 } 
 
 h1 {

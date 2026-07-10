@@ -17,6 +17,7 @@ import ProducctsList from './ProductsList/ProductsList.jsx';
 import Directory from './directory/Directory.jsx';
 import Home from './home/Home.jsx';
 import './index.css';
+import EmployeeList from './paginaion/EmployeeList.jsx';
 
 // 1. Define your routes in an array
 const router = createBrowserRouter([
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path:"directory",
         element:<Directory/>
+      },
+      {
+        path:"pagination",
+        element:<EmployeeList/>
       }
       
     ],

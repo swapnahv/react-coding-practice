@@ -12,7 +12,7 @@ export default function ProducctsList(){
     let response = await fetch('https://dummyjson.com/products/search');
     let data = await response.json();
     setProductsList(data.products);
-    console.log(data);
+    console.log(data, response);
   }
 
   useEffect(() => {
