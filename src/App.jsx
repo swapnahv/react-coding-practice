@@ -10,10 +10,10 @@ export default function App() {
         <h1>Hello Learner!</h1>
       </header>
      <nav style={{backgroundColor:"lightcyan"}}>
-      <Link className='p-10' to="/home">Home</Link>
-      <Link className='p-10' to="/productsList">Products List</Link>
-      <Link className='p-10' to="/directory">Directory</Link>
-      <Link className='p-10' to="">Pagination</Link>
+      <Link className='p-10' to="/home"><span>Home</span></Link>
+      <Link className='p-10' to="/productsList"><span>Products List</span></Link>
+      <Link className='p-10' to="/directory"><span>Directory</span></Link>
+      <Link className='p-10' to="/pagination"><span>Pagination</span></Link>
      </nav>
       </div>
 

@@ -1,6 +1,8 @@
 import {useState, useEffect} from 'react';
 import './pagination.css';
 
+const LIMIT_PER_PAGE=10;
+
 export default function EmployeeList(){
     const [newUserForm, setNewUserForm] = useState(false);
     const [formData, setFormData] = useState({
@@ -15,9 +17,12 @@ export default function EmployeeList(){
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
 
-    async function getUsers(params) {
+    
+
+    useEffect(()=>{
+        function getUsers(params) {
         setSpinner(true);
-        await fetch('https://dummyjson.com/users')
+        fetch(`https://dummyjson.com/users?limit=${LIMIT_PER_PAGE}&skip=${(page*LIMIT_PER_PAGE)-LIMIT_PER_PAGE}`)
             .then(response =>  response.json())
             .then((data) => {
                 setUsersList(data.users);
@@ -26,10 +31,8 @@ export default function EmployeeList(){
             })
             .catch(error=>console.log(error,'Error occurred'));       
     }
-
-    useEffect(()=>{
         getUsers();
-    },[]);
+    },[page]);
 
     const deleteUser = function(user){
         let filteredList = usersList.filter((emp)=>{
@@ -69,19 +72,19 @@ export default function EmployeeList(){
            <form action="" method="post">
             <label>
                 Username:
-                <input onChange={(e)=>{handleChange(e)}} type="text"  name="username" value={formData.username} placeholder='Username here' id="" />
+                <input onChange={handleChange} type="text"  name="username" value={formData.username} placeholder='Username here' id="" />
             </label>
             <label>
                 First Name:
-                <input onChange={(e)=>{handleChange(e)}} type="text" name="firstName" value={formData.firstName} placeholder='first name here' id="" />
+                <input onChange={handleChange} type="text" name="firstName" value={formData.firstName} placeholder='first name here' id="" />
             </label>
             <label>
                 Last Name:
-                <input onChange={(e)=>{handleChange(e)}} type="text" name="lastName" value={formData.lastName} placeholder='last name here' id="" />
+                <input onChange={handleChange} type="text" name="lastName" value={formData.lastName} placeholder='last name here' id="" />
             </label>
             <label>
                 Email:
-                <input onChange={(e)=>{handleChange(e)}} type="email" name="email" value={formData.email} placeholder='email here' id="" />
+                <input onChange={handleChange} type="email" name="email" value={formData.email} placeholder='email here' id="" />
             </label>
             <button onClick={handleSubmit}>Save</button>
            </form>
@@ -97,7 +100,7 @@ export default function EmployeeList(){
                 </tr>
             </thead>
             <tbody className='solid-black-border'>
-                {usersList.length>0 && usersList.slice(page*10-10, page*10).map((user)=>{
+                {usersList.length>0 && usersList.map((user)=>{
                     return (<tr key={user.id}>
                     <td>{user.id}</td>
                     <td>{user.username}</td>
@@ -109,13 +112,13 @@ export default function EmployeeList(){
             </tbody>
         </table>
         <div className='pagination'>
-            {page >1 && <span onClick={()=>handlePagination(page-1)}>◀️</span>}
+            {page >1 && <button onClick={()=>handlePagination(page-1)}>◀️</button>}
             {
-                [...Array(Math.ceil(total/10))].map((_,index)=>{
-                   return <span className={page == index+1 ? 'selected_page' :''} key={index} onClick={()=>handlePagination(index+1)}>{index+1}</span>
+                [...Array(Math.ceil(total/LIMIT_PER_PAGE))].map((_,index)=>{
+                   return <button className={page == index+1 ? 'selected_page' :''} key={index} onClick={()=>handlePagination(index+1)}>{index+1}</button>
                 })
             }
-            {page< (Math.ceil(total/10)) && <span onClick={()=>handlePagination(page+1)}>▶️</span>}
+            {page< (Math.ceil(total/10)) && <button onClick={()=>handlePagination(page+1)}>▶️</button>}
         </div>
         </>
         }
